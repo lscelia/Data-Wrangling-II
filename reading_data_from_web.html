@@ -243,6 +243,80 @@ dynamite_df =
     stars = dynamite_stars
   )</code></pre>
 </div>
+<div id="api" class="section level2">
+<h2>API</h2>
+<p>#get some data from an API about water</p>
+<pre class="r"><code>water_df1 = 
+  GET(&quot;https://data.cityofnewyork.us/resource/ia2d-e54m.csv&quot;) %&gt;% 
+  content()</code></pre>
+<pre><code>## Rows: 42 Columns: 4</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (4): year, new_york_city_population, nyc_consumption_million_gallons_per...</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>let’s see what JSON looks like….</p>
+<pre class="r"><code>water_df = 
+  GET(&quot;https://data.cityofnewyork.us/resource/ia2d-e54m.json&quot;) %&gt;% 
+  content(&quot;text&quot;) %&gt;% 
+  jsonlite::fromJSON() %&gt;% 
+  as_tibble()</code></pre>
+<p>BRFSS data vis API</p>
+<pre class="r"><code>brfss_df = 
+  GET(&quot;https://chronicdata.cdc.gov/resource/acme-vg9e.csv&quot;,
+      query = list(&quot;$limit&quot; = 5000)) %&gt;% 
+  content()</code></pre>
+<pre><code>## Rows: 5000 Columns: 23</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (16): locationabbr, locationdesc, class, topic, question, response, data...
+## dbl  (6): year, sample_size, data_value, confidence_limit_low, confidence_li...
+## lgl  (1): locationid</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>pokemon data</p>
+<pre class="r"><code>poke_data = 
+  GET(&quot;http://pokeapi.co/api/v2/pokemon/1&quot;) %&gt;%
+  content()
+
+poke_data[[&quot;name&quot;]]</code></pre>
+<pre><code>## [1] &quot;bulbasaur&quot;</code></pre>
+<pre class="r"><code>poke_data[[&quot;height&quot;]]</code></pre>
+<pre><code>## [1] 7</code></pre>
+<pre class="r"><code>poke_data[[&quot;abilities&quot;]]</code></pre>
+<pre><code>## [[1]]
+## [[1]]$ability
+## [[1]]$ability$name
+## [1] &quot;overgrow&quot;
+## 
+## [[1]]$ability$url
+## [1] &quot;https://pokeapi.co/api/v2/ability/65/&quot;
+## 
+## 
+## [[1]]$is_hidden
+## [1] FALSE
+## 
+## [[1]]$slot
+## [1] 1
+## 
+## 
+## [[2]]
+## [[2]]$ability
+## [[2]]$ability$name
+## [1] &quot;chlorophyll&quot;
+## 
+## [[2]]$ability$url
+## [1] &quot;https://pokeapi.co/api/v2/ability/34/&quot;
+## 
+## 
+## [[2]]$is_hidden
+## [1] TRUE
+## 
+## [[2]]$slot
+## [1] 3</code></pre>
+</div>
 
 
 
